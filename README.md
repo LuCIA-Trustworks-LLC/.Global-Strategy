@@ -54,6 +54,3 @@ All changes use a pull request. Security-, governance-, license-, or authorizati
 - LuCIA Trustworks, LLC.logo  © 2026 by LuCIA Trustworks, LLC. is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 -  © 2026 AegisAI Project.  © 2026 by LuCIA Trustworks, LLC. is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-- © 2026 AegisAI Project.  © 2026 by LuCIA Trustworks, LLC. is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0/
-
