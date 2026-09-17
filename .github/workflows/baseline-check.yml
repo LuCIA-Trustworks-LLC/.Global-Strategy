@@ -1,0 +1,31 @@
+name: Baseline checks
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  repository-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Reject common secret and key file names
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -type f \( -name '*.pem' -o -name '*.p12' -o -name '*.pfx' -o -name '.env' -o -name 'id_rsa' \) -print -quit | grep -q .; then
+            echo 'Prohibited secret/key-like file detected.' >&2
+            exit 1
+          fi
+      - name: Require governance baseline files
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in README.md AGENTS.md CODE_OF_CONDUCT.md CONTRIBUTING.md SECURITY.md legal/LICENSE-POLICY.md; do
+            test -s "$file" || { echo "Missing required file: $file" >&2; exit 1; }
+          done
