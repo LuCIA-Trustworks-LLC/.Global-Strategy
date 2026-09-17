@@ -1,0 +1,83 @@
+name: Governance Change Proposal
+description: Propose a controlled change to governance, policy, legal, or technology baselines.
+title: "[CHANGE] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Governance Change Proposal
+
+        Use this form to propose a controlled change to the repository baseline.
+        Do not include secrets, credentials, personal data, or confidential information.
+
+  - type: dropdown
+    id: change-area
+    attributes:
+      label: Change area
+      description: Select the area primarily affected by this proposal.
+      options:
+        - Governance
+        - Policy
+        - Security
+        - Legal
+        - Technology
+        - Documentation
+        - Repository configuration
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Change summary
+      description: Describe the proposed change.
+      placeholder: Explain what should be changed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Explain why this change is necessary.
+      placeholder: Include the problem, objective, or applicable requirement.
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-files
+    attributes:
+      label: Affected files or components
+      description: List the files, directories, policies, or components affected.
+      placeholder: |
+        - README.md
+        - legal/LICENSE-POLICY.md
+        - technology/
+    validations:
+      required: true
+
+  - type: textarea
+    id: risk-impact
+    attributes:
+      label: Risk and impact
+      description: Describe security, governance, legal, operational, or compatibility effects.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and references
+      description: Provide relevant standards, specifications, decisions, or supporting references.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Submission confirmation
+      options:
+        - label: I have not included secrets, credentials, personal data, or confidential information.
+          required: true
+        - label: I understand that this proposal requires review before it becomes part of the baseline.
+          required: true
