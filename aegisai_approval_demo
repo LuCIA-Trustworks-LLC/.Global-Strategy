@@ -1,0 +1,97 @@
+"""AegisAI v0.1 | Python 3 standard-library approval workflow demo.
+
+Run: python3 aegisai_approval_demo.py
+The proposer and worker are deterministic stand-ins for AI roles.
+The human approves interactively. All state lives in this process.
+"""
+
+from dataclasses import dataclass, replace
+import hashlib
+import json
+
+
+@dataclass(frozen=True)
+class Request:
+    request_id: str
+    proposer: str
+    worker: str
+    findings: tuple[str, ...]
+    action: str = "draft_internal_report"
+
+    def digest(self):
+        payload = json.dumps(vars(self), sort_keys=True, ensure_ascii=False)
+        return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+class Workflow:
+    def __init__(self):
+        self.requests = {}
+        self.approvals = {}
+        self.completed = set()
+        self.audit = []
+
+    def record(self, event, request, actor, **details):
+        self.audit.append({
+            "event": event,
+            "request_id": request.request_id,
+            "digest": request.digest(),
+            "actor": actor,
+            **details,
+        })
+
+    def propose(self, request):
+        if request.request_id in self.requests:
+            raise ValueError("Duplicate request ID")
+        self.requests[request.request_id] = request
+        self.record("proposed", request, request.proposer, worker=request.worker)
+
+    def approve(self, request_id, approver):
+        request = self.requests[request_id]
+        if request_id in self.approvals:
+            raise ValueError("Request already approved")
+        self.approvals[request_id] = request.digest()
+        self.record("approved", request, approver)
+
+    def execute(self, request, worker):
+        request_id = request.request_id
+        if self.approvals.get(request_id) != request.digest():
+            reason = "approval_missing_or_request_changed"
+        elif request_id in self.completed:
+            reason = "already_executed"
+        elif worker != request.worker or request.action != "draft_internal_report":
+            reason = "worker_or_action_mismatch"
+        else:
+            report = "社内セキュリティ点検報告（下書き）\n" + "\n".join(
+                f"- {finding}" for finding in request.findings
+            )
+            self.completed.add(request_id)
+            self.record("executed", request, worker, result=report)
+            return report
+
+        self.record("denied", request, worker, reason=reason)
+        return None
+
+
+def main():
+    workflow = Workflow()
+    request = Request(
+        "demo-001",
+        "supervisor-ai-demo",
+        "worker-ai-demo",
+        ("架空のテスト環境で、バックアップの復元手順を確認しました。",),
+    )
+    workflow.propose(request)
+    workflow.execute(request, request.worker)
+    print(json.dumps(vars(request), ensure_ascii=False, indent=2))
+    if input("この依頼を承認しますか？ [y/N] ").strip().lower() == "y":
+        workflow.approve(request.request_id, "human-reviewer-demo")
+        changed = replace(request, findings=("承認後に差し替えた内容",))
+        workflow.execute(changed, request.worker)
+        workflow.execute(request, request.worker)
+        workflow.execute(request, request.worker)
+
+    print(json.dumps(workflow.audit, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()
