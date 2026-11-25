@@ -1,4 +1,4 @@
-# LuCIA Trustworks — Global Strategy
+# LuCIA Trustworks — Global Strategy " Supported by Omdia. "
 
 This repository is the governance and operating baseline for LuCIA Trustworks, LLC., AegisAI Project, and SeaAI Project.
 
