@@ -1,0 +1,76 @@
+; Domain: lucia-trustworks.llc
+; Exported (y-m-d hh:mm:ss): 2026-07-30 02:33:59
+;
+; This file is intended for use for informational and archival
+; purposes ONLY and MUST be edited before use on a production
+; DNS server.
+;
+; In particular, you must update the SOA record with the correct
+; authoritative name server and contact e-mail address information,
+; and add the correct NS records for the name servers which will
+; be authoritative for this domain.
+;
+; For further information, please consult the BIND documentation
+; located on the following website:
+;
+; http://www.isc.org/
+;
+; And RFC 1035:
+;
+; http://www.ietf.org/rfc/rfc1035.txt
+;
+; Please note that we do NOT offer technical support for any use
+; of this zone data, the BIND name server, or any other third-
+; party DNS software.
+;
+; Use at your own risk.
+
+
+$ORIGIN lucia-trustworks.llc.
+
+; SOA Record
+@	3600	 IN 	SOA	ns37.domaincontrol.com.	dns.jomax.net. (
+					2026073007
+					28800
+					7200
+					604800
+					3600
+					) 
+
+; A Record
+@	3600	 IN 	A	15.197.225.128
+@	3600	 IN 	A	3.33.251.168
+mail	800	 IN 	A	192.0.2.1
+www.lucia-trustworks.llc	3600	 IN 	A	15.197.225.128
+www.lucia-trustworks.llc	3600	 IN 	A	3.33.251.168
+
+; TXT Record
+@	3600	 IN 	TXT	""v=spf1 include:icloud.com ~all""
+@	3600	 IN 	TXT	"apple-domain=zv9Mw13WEGpFsvA2"
+@	800	 IN 	TXT	"curl -k https://<server-ip>:9345/cacerts | sha256sum"
+@	600	 IN 	TXT	"v=spf1 include:example.com include:icloud.com ~all"
+@	600	 IN 	TXT	"v=spf1 include:spf.em.secureserver.net ?all"
+*._domainkey	800	 IN 	TXT	""v=DMARC1; p=reject; sp=..."
+example.com	800	 IN 	TXT	""v=spf1 ip4:...""
+_acme-challenge	600	 IN 	TXT	""<prefix><cluster CA hash>::<credentials>""
+_dmarc	800	 IN 	TXT	""v=DMARC1; p=reject; sp=..."
+_dmarc	3600	 IN 	TXT	"v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;"
+
+; CNAME Record
+bounces.cloud2.em	600	 IN 	CNAME	cbounces.cloud2.em.secureserver.net.
+sable.cloud2._domainkey	600	 IN 	CNAME	dkim.cloud2.em.secureserver.net.
+sig1._domainkey	3600	 IN 	CNAME	sig1.dkim.lucia-trustworks.llc.at.icloudmailadmin.com.
+www	3600	 IN 	CNAME	@
+_domainconnect	3600	 IN 	CNAME	_domainconnect.gd.domaincontrol.com.
+
+; NS Record
+@	800	 IN 	NS	kenia.ns.cloudflare.com.
+@	3600	 IN 	NS	ns37.domaincontrol.com.
+@	3600	 IN 	NS	ns38.domaincontrol.com.
+@	800	 IN 	NS	vin.ns.cloudflare.com.
+
+; MX Record
+@	3600	 IN 	MX	10	mx01.mail.icloud.com.
+@	3600	 IN 	MX	10	mx02.mail.icloud.com.
+example.com	800	 IN 	MX	5	john.mx.example-server.test.
+
