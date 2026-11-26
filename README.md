@@ -1,4 +1,7 @@
 
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aws-sam-translator?label=Python)](https://pypi.org/project/aws-sam-translator/)
+
+
 # LuCIA Trustworks — Global Strategy " Supported by Omdia. "
 
 
